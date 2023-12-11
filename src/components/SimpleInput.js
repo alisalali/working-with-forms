@@ -7,11 +7,19 @@ const SimpleInput = (props) => {
   const [enteredNameIsValid, setEnteredNameIsValid] = useState(false); // provide for feedback validation (true is workaround for fixing invalid state)
   const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false); // to validate touched form input
 
+  const nameInputRef = useRef(); //1.2 define constant for useRef hook
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
 
-  const nameInputRef = useRef(); //1.2 define constant for useRef hook
+  const nameInputBlur = (event) => {
+    setEnteredNameIsTouched(true);
+    if (enteredName.trim() == "") {
+      setEnteredNameIsValid(false); //
+      return;
+    }
+  };
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
@@ -54,6 +62,7 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
+          onBlur={nameInputBlur}
           value={enteredName}
         />
         {
