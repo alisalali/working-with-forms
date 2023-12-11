@@ -3,7 +3,9 @@ import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState(""); //setup a state for input value
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(true); // provide for feedback validation
+  // const [enteredNameIsValid, setEnteredNameIsValid] = useState(true); // provide for feedback validation (true is workaround for fixing invalid state)
+  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false); // provide for feedback validation (true is workaround for fixing invalid state)
+  const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false); // to validate touched form input
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -13,6 +15,9 @@ const SimpleInput = (props) => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
+
+    //touched form input before any validation
+    setEnteredNameIsTouched(true);
 
     // validate empty string
     if (enteredName.trim() == "") {
@@ -31,10 +36,13 @@ const SimpleInput = (props) => {
     setEnteredName("");
   };
 
+  // condition for touched state validation
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched;
+
   // validate entered classes dynamic
-  const nameInputClasses = enteredNameIsValid
-    ? "form-control"
-    : "form-control invalid";
+  const nameInputClasses = nameInputIsInvalid
+    ? "form-control invalid"
+    : "form-control ";
 
   return (
     <form onSubmit={formSubmitHandler}>
@@ -50,7 +58,7 @@ const SimpleInput = (props) => {
         />
         {
           // show message feedback when error is occurred
-          !enteredNameIsValid && (
+          nameInputIsInvalid && (
             <p className="error-text">Name must not be empty</p>
           )
         }
