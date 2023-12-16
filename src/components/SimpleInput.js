@@ -9,7 +9,7 @@ const SimpleInput = (props) => {
     inputBlurHandler: nameBlurHandler,
     rest: restNameInput,
   } = useInput((value) => value.trim() !== "");
-  
+
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -46,7 +46,7 @@ const SimpleInput = (props) => {
   useEffect(() => {
     if (enteredNameIsValid) {
       setFromIsValid(true);
-      console.log("useffcet");
+      console.log("useEffect");
     } else {
       setFromIsValid(false);
     }
