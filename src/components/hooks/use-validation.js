@@ -24,6 +24,7 @@ const inputStateReducer = (state, action) => {
       isTouched: false,
     };
   }
+  return initialInputState;
 };
 
 const useValidation = (validationFunction) => {
